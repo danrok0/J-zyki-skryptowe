@@ -386,3 +386,6 @@
 2025-06-27 18:11:25 - DEBUG - Operation 'game_update' took 2.7471s | population=650, buildings=10
 2025-06-27 18:11:39 - DEBUG - Operation 'game_update' took 1.4183s | population=659, buildings=23
 2025-06-27 18:11:54 - DEBUG - Operation 'game_update' took 1.3894s | population=667, buildings=23
+2025-06-27 20:04:00 - DEBUG - Operation 'game_update' took 1.3014s | population=469, buildings=5
+2025-06-27 20:04:16 - DEBUG - Operation 'game_update' took 2.3645s | population=512, buildings=6
+2025-06-27 20:06:40 - DEBUG - Operation 'game_update' took 1.3553s | population=755, buildings=13

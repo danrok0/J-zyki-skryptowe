@@ -13,6 +13,178 @@ import json
 import csv
 import os
 from dataclasses import dataclass
+from enum import Enum
+from unittest.mock import Mock
+
+class ReportType(Enum):
+    """Typy raportów"""
+    FINANCIAL = "financial"
+    POPULATION = "population"
+    BUILDINGS = "buildings"
+    RESOURCES = "resources"
+    PERFORMANCE = "performance"
+    COMPREHENSIVE = "comprehensive"
+
+class ReportFormat(Enum):
+    """Formaty eksportu raportów"""
+    JSON = "json"
+    CSV = "csv"
+    PDF = "pdf"
+    HTML = "html"
+
+@dataclass
+class BaseReport:
+    """Bazowa klasa dla wszystkich raportów"""
+    timestamp: datetime = None
+    
+    def __post_init__(self):
+        if self.timestamp is None:
+            self.timestamp = datetime.now()
+    
+    def to_dict(self) -> Dict:
+        """Konwertuje raport do słownika"""
+        return {
+            'timestamp': self.timestamp.isoformat(),
+            'type': self.__class__.__name__
+        }
+
+@dataclass
+class FinancialReport(BaseReport):
+    """Raport finansowy"""
+    current_money: float = 0
+    total_income: float = 0
+    total_expenses: float = 0
+    net_income: float = None
+    
+    def __post_init__(self):
+        super().__post_init__()
+        if self.net_income is None:
+            self.net_income = self.total_income - self.total_expenses
+    
+    def get_net_income(self) -> float:
+        """Oblicza dochód netto"""
+        return self.total_income - self.total_expenses
+    
+    def to_dict(self) -> Dict:
+        base_dict = super().to_dict()
+        base_dict.update({
+            'current_money': self.current_money,
+            'total_income': self.total_income,
+            'total_expenses': self.total_expenses,
+            'net_income': self.net_income
+        })
+        return base_dict
+    
+    def calculate_trend(self, historical_data: List[Dict]) -> float:
+        """Oblicza trend finansowy"""
+        if len(historical_data) < 2:
+            return 0.0
+        
+        net_incomes = [data['net_income'] for data in historical_data]
+        if len(net_incomes) < 2:
+            return 0.0
+        
+        return (net_incomes[-1] - net_incomes[0]) / max(abs(net_incomes[0]), 1)
+
+@dataclass
+class PopulationReport(BaseReport):
+    """Raport populacyjny"""
+    total_population: int = 0
+    satisfaction: float = 50.0
+    unemployment_rate: float = 0.0
+    growth_rate: float = 0.0
+    demographics: Dict = None
+    
+    def __post_init__(self):
+        super().__post_init__()
+        if self.demographics is None:
+            self.demographics = {}
+    
+    def to_dict(self) -> Dict:
+        base_dict = super().to_dict()
+        base_dict.update({
+            'total_population': self.total_population,
+            'satisfaction': self.satisfaction,
+            'unemployment_rate': self.unemployment_rate,
+            'growth_rate': self.growth_rate,
+            'demographics': self.demographics
+        })
+        return base_dict
+
+@dataclass
+class BuildingReport(BaseReport):
+    """Raport budynków"""
+    buildings_by_type: Dict = None
+    total_buildings: int = 0
+    average_condition: float = 100.0
+    maintenance_needed: List = None
+    
+    def __post_init__(self):
+        super().__post_init__()
+        if self.buildings_by_type is None:
+            self.buildings_by_type = {}
+        if self.maintenance_needed is None:
+            self.maintenance_needed = []
+    
+    def to_dict(self) -> Dict:
+        base_dict = super().to_dict()
+        base_dict.update({
+            'buildings_by_type': self.buildings_by_type,
+            'total_buildings': self.total_buildings,
+            'average_condition': self.average_condition,
+            'maintenance_needed': self.maintenance_needed
+        })
+        return base_dict
+
+@dataclass
+class ResourceReport(BaseReport):
+    """Raport zasobów"""
+    power_available: float = 0
+    water_available: float = 0
+    power_consumption: float = 0
+    water_consumption: float = 0
+    efficiency: Dict = None
+    
+    def __post_init__(self):
+        super().__post_init__()
+        if self.efficiency is None:
+            self.efficiency = {}
+    
+    def to_dict(self) -> Dict:
+        base_dict = super().to_dict()
+        base_dict.update({
+            'power_available': self.power_available,
+            'water_available': self.water_available,
+            'power_consumption': self.power_consumption,
+            'water_consumption': self.water_consumption,
+            'efficiency': self.efficiency
+        })
+        return base_dict
+
+@dataclass
+class PerformanceReport(BaseReport):
+    """Raport wydajności"""
+    fps: float = 60.0
+    memory_usage: float = 0.0
+    load_times: Dict = None
+    bottlenecks: List = None
+    
+    def __post_init__(self):
+        super().__post_init__()
+        if self.load_times is None:
+            self.load_times = {}
+        if self.bottlenecks is None:
+            self.bottlenecks = []
+    
+    def to_dict(self) -> Dict:
+        base_dict = super().to_dict()
+        base_dict.update({
+            'fps': self.fps,
+            'memory_usage': self.memory_usage,
+            'load_times': self.load_times,
+            'bottlenecks': self.bottlenecks
+        })
+        return base_dict
 
 @dataclass
 class ReportData:
@@ -34,6 +206,7 @@ class ReportManager:
         self.historical_data: List[Dict] = []
         self.reports_generated = 0
         self.export_directory = "exports"
+        self.reports_history: List[BaseReport] = []
         
         # Utwórz katalog eksportu jeśli nie istnieje
         os.makedirs(self.export_directory, exist_ok=True)
@@ -43,6 +216,121 @@ class ReportManager:
         plt.rcParams['figure.figsize'] = (12, 8)
         plt.rcParams['font.size'] = 10
     
+    def generate_report(self, report_type: ReportType, game_engine) -> BaseReport:
+        """Generuje raport zadanego typu"""
+        if report_type == ReportType.FINANCIAL:
+            return self._generate_financial_report(game_engine)
+        elif report_type == ReportType.POPULATION:
+            return self._generate_population_report(game_engine)
+        elif report_type == ReportType.BUILDINGS:
+            return self._generate_building_report(game_engine)
+        elif report_type == ReportType.RESOURCES:
+            return self._generate_resource_report(game_engine)
+        elif report_type == ReportType.PERFORMANCE:
+            return self._generate_performance_report(game_engine)
+        else:
+            raise ValueError(f"Nieznany typ raportu: {report_type}")
+    
+    def _generate_financial_report(self, game_engine) -> FinancialReport:
+        """Generuje raport finansowy"""
+        current_money = getattr(game_engine, 'resources', Mock()).money if hasattr(game_engine, 'resources') else 0
+        total_income = game_engine.get_total_income() if hasattr(game_engine, 'get_total_income') else 0
+        total_expenses = game_engine.get_total_expenses() if hasattr(game_engine, 'get_total_expenses') else 0
+        
+        return FinancialReport(
+            current_money=current_money,
+            total_income=total_income,
+            total_expenses=total_expenses
+        )
+    
+    def _generate_population_report(self, game_engine) -> PopulationReport:
+        """Generuje raport populacyjny"""
+        if hasattr(game_engine, 'population'):
+            total_pop = game_engine.population.get_total_population() if hasattr(game_engine.population, 'get_total_population') else 0
+            satisfaction = game_engine.population.get_satisfaction() if hasattr(game_engine.population, 'get_satisfaction') else 50
+            unemployment = game_engine.population.get_unemployment_rate() if hasattr(game_engine.population, 'get_unemployment_rate') else 0
+        else:
+            total_pop = 0
+            satisfaction = 50
+            unemployment = 0
+        
+        return PopulationReport(
+            total_population=total_pop,
+            satisfaction=satisfaction,
+            unemployment_rate=unemployment
+        )
+    
+    def _generate_building_report(self, game_engine) -> BuildingReport:
+        """Generuje raport budynków"""
+        buildings = game_engine.get_all_buildings() if hasattr(game_engine, 'get_all_buildings') else []
+        
+        buildings_by_type = {}
+        total_buildings = len(buildings)
+        total_condition = 0
+        
+        for building in buildings:
+            building_type = getattr(building, 'building_type', 'unknown')
+            condition = getattr(building, 'condition', 100)
+            
+            if building_type not in buildings_by_type:
+                buildings_by_type[building_type] = 0
+            buildings_by_type[building_type] += 1
+            total_condition += condition
+        
+        avg_condition = total_condition / max(total_buildings, 1)
+        
+        return BuildingReport(
+            buildings_by_type=buildings_by_type,
+            total_buildings=total_buildings,
+            average_condition=avg_condition
+        )
+    
+    def _generate_resource_report(self, game_engine) -> ResourceReport:
+        """Generuje raport zasobów"""
+        if hasattr(game_engine, 'resources'):
+            power = getattr(game_engine.resources, 'power', 0)
+            water = getattr(game_engine.resources, 'water', 0)
+        else:
+            power = 0
+            water = 0
+        
+        power_consumption = game_engine.get_power_consumption() if hasattr(game_engine, 'get_power_consumption') else 0
+        water_consumption = game_engine.get_water_consumption() if hasattr(game_engine, 'get_water_consumption') else 0
+        
+        return ResourceReport(
+            power_available=power,
+            water_available=water,
+            power_consumption=power_consumption,
+            water_consumption=water_consumption
+        )
+    
+    def _generate_performance_report(self, game_engine) -> PerformanceReport:
+        """Generuje raport wydajności"""
+        return PerformanceReport()
+    
+    def save_to_history(self, report: BaseReport):
+        """Zapisuje raport do historii"""
+        self.reports_history.append(report)
+    
+    def export_report(self, report: BaseReport, format_type: ReportFormat, filename: str) -> bool:
+        """Eksportuje raport do pliku"""
+        try:
+            if format_type == ReportFormat.JSON:
+                with open(filename, 'w', encoding='utf-8') as f:
+                    json.dump(report.to_dict(), f, indent=2, ensure_ascii=False)
+            elif format_type == ReportFormat.CSV:
+                # Podstawowy eksport CSV
+                data = report.to_dict()
+                with open(filename, 'w', newline='', encoding='utf-8') as f:
+                    writer = csv.writer(f)
+                    writer.writerow(['Pole', 'Wartość'])
+                    for key, value in data.items():
+                        writer.writerow([key, str(value)])
+            return True
+        except Exception as e:
+            print(f"Błąd eksportu: {e}")
+            return False
+
     def record_turn_data(self, turn: int, game_state: Dict):
         """Zapisuje dane z tury do historii"""
         turn_data = {

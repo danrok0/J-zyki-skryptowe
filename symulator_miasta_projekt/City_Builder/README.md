@@ -425,6 +425,9 @@ python Main.py
 
 ###Covarage
 
+Jak odpalić?
+python -m pytest --cov=. --cov-report=html --cov-report=term
+
 Otwórz Eksplorator Windows
 Idź do: C:\Users\TUF\python\symulator_miasta_projekt\City_Builder\htmlcov\
 Kliknij dwukrotnie index.html

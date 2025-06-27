@@ -98,6 +98,39 @@ class DataValidator:
         # Logger do rejestrowania operacji walidacji
         self.logger = logging.getLogger(__name__)
     
+    # === METODY WALIDACJI PODSTAWOWYCH TYPÓW (WYMAGANE PRZEZ TESTY) ===
+    
+    def validate_string(self, value: Any) -> bool:
+        """Waliduje czy wartość jest niepustym stringiem"""
+        return isinstance(value, str) and len(value) > 0
+    
+    def validate_integer(self, value: Any) -> bool:
+        """Waliduje czy wartość jest liczbą całkowitą"""
+        return isinstance(value, int) and not isinstance(value, bool)
+    
+    def validate_float(self, value: Any) -> bool:
+        """Waliduje czy wartość jest liczbą zmiennoprzecinkową"""
+        return isinstance(value, (int, float)) and not isinstance(value, bool)
+    
+    def validate_boolean(self, value: Any) -> bool:
+        """Waliduje czy wartość jest wartością logiczną"""
+        return isinstance(value, bool)
+    
+    def validate_list(self, value: Any) -> bool:
+        """Waliduje czy wartość jest listą"""
+        return isinstance(value, list)
+    
+    def validate_dict(self, value: Any) -> bool:
+        """Waliduje czy wartość jest słownikiem"""
+        return isinstance(value, dict)
+    
+    def validate_range(self, value: Union[int, float], min_val: Union[int, float], max_val: Union[int, float]) -> bool:
+        """Waliduje czy wartość mieści się w zakresie"""
+        try:
+            return min_val <= value <= max_val
+        except (TypeError, ValueError):
+            return False
+
     def validate_field(self, field_name: str, value: str) -> Tuple[bool, Optional[str]]:
         """
         Waliduje pojedyncze pole używając odpowiedniego wzorca regex.
