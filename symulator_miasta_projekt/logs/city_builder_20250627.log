@@ -1,0 +1,13 @@
+2025-06-27 17:14:50 - city_builder.events - [32mINFO[0m - [INIT] Uruchomienie aplikacji | Data: window_size=1600x1000, map_size=60x60
+2025-06-27 17:15:07 - city_builder.performance - [36mDEBUG[0m - Operation 'game_update' took 1.3674s | population=291, buildings=0
+2025-06-27 17:15:28 - city_builder.performance - [36mDEBUG[0m - Operation 'game_update' took 7.4969s | population=292, buildings=0
+2025-06-27 17:15:37 - city_builder.performance - [36mDEBUG[0m - Operation 'game_update' took 1.3089s | population=293, buildings=0
+2025-06-27 17:15:52 - city_builder.performance - [36mDEBUG[0m - Operation 'game_update' took 1.2372s | population=294, buildings=0
+2025-06-27 17:16:07 - city_builder.performance - [36mDEBUG[0m - Operation 'game_update' took 1.2186s | population=295, buildings=0
+2025-06-27 17:16:22 - city_builder.performance - [36mDEBUG[0m - Operation 'game_update' took 1.2480s | population=296, buildings=0
+2025-06-27 17:16:37 - city_builder.performance - [36mDEBUG[0m - Operation 'game_update' took 1.2069s | population=297, buildings=0
+2025-06-27 18:10:52 - city_builder.events - [32mINFO[0m - [INIT] Uruchomienie aplikacji | Data: window_size=1600x1000, map_size=60x60
+2025-06-27 18:11:09 - city_builder.performance - [36mDEBUG[0m - Operation 'game_update' took 1.3899s | population=361, buildings=2
+2025-06-27 18:11:25 - city_builder.performance - [36mDEBUG[0m - Operation 'game_update' took 2.7471s | population=650, buildings=10
+2025-06-27 18:11:39 - city_builder.performance - [36mDEBUG[0m - Operation 'game_update' took 1.4183s | population=659, buildings=23
+2025-06-27 18:11:54 - city_builder.performance - [36mDEBUG[0m - Operation 'game_update' took 1.3894s | population=667, buildings=23

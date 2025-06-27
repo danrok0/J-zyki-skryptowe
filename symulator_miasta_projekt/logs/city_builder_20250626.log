@@ -1,0 +1,2 @@
+2025-06-26 15:14:28 - city_builder.events - [32mINFO[0m - [INIT] Uruchomienie aplikacji | Data: window_size=1600x1000, map_size=60x60
+2025-06-26 15:14:45 - city_builder.performance - [36mDEBUG[0m - Operation 'game_update' took 1.3412s | population=361, buildings=2

@@ -1,0 +1,21 @@
+2025-06-26 15:15:12 - city_builder.file_processor - [32mINFO[0m - Zapisywanie pliku JSON: C:\Users\TUF\AppData\Local\Temp\tmpa5gs4cwc\test.json
+2025-06-26 15:15:12 - city_builder.file_processor - [32mINFO[0m - Pomyślnie zapisano plik JSON: 158 bajtów
+2025-06-26 15:15:12 - city_builder.file_processor - [32mINFO[0m - Czytanie pliku JSON: C:\Users\TUF\AppData\Local\Temp\tmpa5gs4cwc\test.json
+2025-06-26 15:15:12 - city_builder.file_processor - [32mINFO[0m - Pomyślnie wczytano plik JSON: 6 elementów
+2025-06-26 15:15:12 - city_builder.file_processor - [32mINFO[0m - Zapisywanie pliku CSV: C:\Users\TUF\AppData\Local\Temp\tmpa5gs4cwc\test.csv
+2025-06-26 15:15:12 - city_builder.file_processor - [32mINFO[0m - Pomyślnie zapisano plik CSV: 2 wierszy
+2025-06-26 15:15:12 - city_builder.file_processor - [32mINFO[0m - Zapisywanie pliku XML: C:\Users\TUF\AppData\Local\Temp\tmpa5gs4cwc\test.xml
+2025-06-26 15:15:12 - city_builder.file_processor - [32mINFO[0m - Pomyślnie zapisano plik XML: 229 bajtów
+2025-06-26 15:15:12 - city_builder.file_processor - [32mINFO[0m - Zapisywanie pliku JSON: C:\Users\TUF\AppData\Local\Temp\tmprhrb2ir3\game_save.json
+2025-06-26 15:15:12 - city_builder.file_processor - [32mINFO[0m - Pomyślnie zapisano plik JSON: 327 bajtów
+2025-06-26 15:15:12 - city_builder.file_processor - [32mINFO[0m - Czytanie pliku JSON: C:\Users\TUF\AppData\Local\Temp\tmprhrb2ir3\game_save.json
+2025-06-26 15:15:12 - city_builder.file_processor - [32mINFO[0m - Pomyślnie wczytano plik JSON: 6 elementów
+2025-06-26 15:15:12 - city_builder.file_processor - [32mINFO[0m - Zapisywanie pliku XML: C:\Users\TUF\AppData\Local\Temp\tmprhrb2ir3\game_save.xml
+2025-06-26 15:15:12 - city_builder.file_processor - [32mINFO[0m - Pomyślnie zapisano plik XML: 447 bajtów
+2025-06-26 15:15:12 - city_builder.file_processor - [32mINFO[0m - Czytanie pliku XML: C:\Users\TUF\AppData\Local\Temp\tmprhrb2ir3\game_save.xml
+2025-06-26 15:15:12 - city_builder.file_processor - [32mINFO[0m - Pomyślnie wczytano plik XML: 6 elementów
+2025-06-26 15:15:12 - city_builder.file_processor - [32mINFO[0m - Zapisywanie pliku CSV: C:\Users\TUF\AppData\Local\Temp\tmprhrb2ir3\statistics.csv
+2025-06-26 15:15:12 - city_builder.file_processor - [32mINFO[0m - Pomyślnie zapisano plik CSV: 3 wierszy
+2025-06-26 15:15:12 - city_builder.file_processor - [32mINFO[0m - Czytanie pliku CSV: C:\Users\TUF\AppData\Local\Temp\tmprhrb2ir3\statistics.csv
+2025-06-26 15:15:12 - city_builder.file_processor - [32mINFO[0m - Pomyślnie wczytano plik CSV: 3 wierszy
+2025-06-26 15:15:12 - city_builder.test - [32mINFO[0m - Test log message
